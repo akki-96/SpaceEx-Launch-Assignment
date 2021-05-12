@@ -1,4 +1,114 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .App {
   font-family: sans-serif;
+  text-align: left;
+  padding-top: 7px;
+  padding-left: 7px;
+  width: 95rem;
+  height: 50rem;
+  background-color: whitesmoke;
+}
+
+.heading {
+  margin-left: 0.7rem;
+}
+
+.filter {
+  margin: 0.5rem;
+}
+
+h2 {
   text-align: center;
+  margin-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.child1 {
+  height: 42rem;
+  width: 94.5rem;
+  background-color: red;
+  margin-top: 2rem;
+  display: flex;
+}
+
+.leftGrid {
+  height: 41.5rem;
+  width: 19rem;
+  background-color: aqua;
+  margin: 5px;
+  margin-left: 1rem;
+  margin-right: 2rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6);
+  transition: 0.3s;
+  border-radius: 1rem;
+}
+
+.rightGrid {
+  height: 41.5rem;
+  width: 78rem;
+  background-color: greenyellow;
+  margin: 5px;
+}
+
+input {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  text-decoration: none;
+  margin: 2.5rem;
+  margin-left: 2.6rem;
+  width: 12.5rem;
+  height: 3rem;
+  background-color: transparent;
+  text-align: center;
+}
+
+.launchYearButton {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.yearTrueFalse {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.landTrueFalse {
+  display: flex;
+  justify-content: space-evenly;
+}
+button {
+  width: 5rem;
+  height: 2rem;
+  background-color: rgb(187, 224, 131);
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: rgb(168, 255, 38);
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.8);
+  transition: 0.3s;
+  width: 15rem;
+  height: 27rem;
+  border-radius: 1.5rem;
+}
+.container {
+  padding: 10px 20px;
+}
+
+img {
+  width: 15rem;
+  height: 15rem;
+  padding: 10px;
+  border-radius: 1.5rem;
 }
