@@ -3,7 +3,23 @@ import "./styles.css";
 
 export default function App() {
   const [cardData, setCardData] = useState([]);
-
+  const dateArray = [
+    "2006",
+    "2007",
+    "2008",
+    "2009",
+    "2010",
+    "2011",
+    "2012",
+    "2013",
+    "2014",
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020"
+  ];
   const apiCall = async () => {
     const apiData = await fetch(
       `https://api.spaceXdata.com/v4/launches?limit=100`
@@ -29,8 +45,14 @@ export default function App() {
               <h1 className="filter">Filters</h1>
               <input type="text" placeholder="Launch Year" />
               <div className="launchYearButton">
-                <button>2006</button>
-                <button>2007</button>
+                {dateArray.map((items) => {
+                  return (
+                    <div className="btn">
+                      {" "}
+                      <button>{items}</button>
+                    </div>
+                  );
+                })}
               </div>
             </div>
             <div className="successfulYear">
