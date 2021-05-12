@@ -123,6 +123,12 @@ img {
   border-radius: 1.5rem;
 }
 
+footer {
+  /* text-align: center; */
+  margin-left: 18rem;
+  margin-top: 3rem;
+}
+
 @media screen and (max-width: 992px) {
   .card {
     flex: 50%;
