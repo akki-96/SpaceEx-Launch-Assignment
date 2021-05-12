@@ -34,14 +34,14 @@ export default function App() {
               </div>
             </div>
             <div className="successfulYear">
-              <input type="text" placeholder="Successful Year" />
+              <input type="text" placeholder="Successful Launch" />
               <div className="yearTrueFalse">
                 <button>True</button>
                 <button>False</button>
               </div>
             </div>
             <div className="successfulLand">
-              <input type="text" placeholder="Successful Year" />
+              <input type="text" placeholder="Successful Land" />
               <div className="landTrueFalse">
                 <button>True</button>
                 <button>False</button>
@@ -58,7 +58,7 @@ export default function App() {
                     alt="spaceCraftImage"
                   />
                   <div className="container">
-                    <h>Mission Name :</h> <br />
+                    <h4>Mission Name :</h4> <br />
                     <h5>Flight No. :</h5> <br />
                     <h5>Mission Ids :</h5> <br />
                     <h5>Launch Year :</h5> <br />
