@@ -98,8 +98,8 @@ export default function App() {
                 </div>
               ))
             }
-            <footer className="footer">
-              <h2>Developed by : Akhilesh Singh</h2>
+            <footer>
+              <h2 className="footer">Developed by : Akhilesh Singh</h2>
             </footer>
           </div>
         </div>

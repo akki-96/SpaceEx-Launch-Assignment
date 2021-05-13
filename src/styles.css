@@ -100,6 +100,8 @@ button {
   border: none;
   font-weight: bold;
   cursor: pointer;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6);
+  transition: 0.3s;
 }
 
 button:hover {
@@ -138,8 +140,10 @@ img {
 
 footer {
   /* text-align: center; */
-  margin-left: 18rem;
-  margin-top: 3rem;
+  /* margin-left: 18rem; */
+  /* margin-top: 10rem; */
+  padding: 2rem;
+  padding-left: 20rem;
 }
 
 @media screen and (max-width: 992px) {
