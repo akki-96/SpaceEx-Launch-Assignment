@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import "./styles.css";
 import Card from "./Card";
+import LaunchButton from "./LaunchButton";
+
 export default function App() {
   const [cardData, setCardData] = useState([]);
   const [copyCardData, setCopyCardData] = useState([]);
@@ -26,6 +28,7 @@ export default function App() {
     "2020",
     "2021"
   ];
+
   const apiCall = async () => {
     const apiData = await fetch(
       `https://api.spaceXdata.com/v4/launches?limit=100`
@@ -50,6 +53,7 @@ export default function App() {
     );
     setCardData(filteredData);
   };
+
   // Filtering Launch Year by Input
   const filterLaunchYearByInput = (inputSearch) => {
     if (inputSearch == "") {
@@ -138,10 +142,7 @@ export default function App() {
                 {dateArray.map((items, idx) => {
                   return (
                     <div className="btn" onClick={(e) => filterByLaunchYear(e)}>
-                      {" "}
-                      <button id={idx} value={items}>
-                        {items}
-                      </button>
+                      <LaunchButton key={idx} items={items} />
                     </div>
                   );
                 })}
@@ -180,13 +181,11 @@ export default function App() {
               </div>
             </div>
           </div>
+
           <div className="rightGrid">
             {cardData.map((items) => (
               <Card items={items} />
             ))}
-            <footer>
-              <h2 className="footer">Developed by : Akhilesh Singh</h2>
-            </footer>
           </div>
         </div>
       </div>
