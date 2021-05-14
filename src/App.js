@@ -3,9 +3,11 @@ import "./styles.css";
 
 export default function App() {
   const [cardData, setCardData] = useState([]);
-  const [inputSearch, setInputSearch] = useState();
   const [cardDataActual, setCardDataActual] = useState([]);
   const [copyCardData, setCopyCardData] = useState([]);
+  const [inputSearchYear, setInputSearchYear] = useState();
+  const [inputSearchLaunch, setInputSearchLaunch] = useState();
+  const [inputSearchLand, setInputSearchLand] = useState();
 
   const dateArray = [
     "2006",
@@ -42,20 +44,30 @@ export default function App() {
     apiCall();
   }, []);
 
+  // Filtering Launch Year by Button
   const filterByLaunchYear = (e) => {
-    // console.log();
-    const filteredData = cardDataActual.filter(
-      (items) =>
-        items.date_local.includes(e.target.value) ||
-        items.date_local.includes(parseInt(inputSearch))
+    const filteredData = cardDataActual.filter((items) =>
+      items.date_local.includes(e.target.value)
     );
     setCardData(filteredData);
   };
+  // Filtering Launch Year by Input
+  const filterLaunchYearByInput = (inputSearch) => {
+    if (inputSearch == "") {
+      setCardData(cardDataActual);
+    } else {
+      const filteredData = cardDataActual.filter((items) =>
+        items.date_local.includes(parseInt(inputSearch))
+      );
+      setCardData(filteredData);
+    }
+  };
 
-  //  useEffect(()=>{
-  //   filterByLaunchYear();
-  //  },[inputSearch])
+  useEffect(() => {
+    filterLaunchYearByInput(inputSearchYear);
+  }, [inputSearchYear]);
 
+  // Filtering Successful Launch by Button
   const filterBySuccessfulLaunch = (e) => {
     const filteredData = cardDataActual.filter((items) =>
       (items.success ? "true" : "false").includes(e.target.value)
@@ -63,6 +75,24 @@ export default function App() {
     setCardData(filteredData);
   };
 
+  // Filtering Successful Launch by Input
+  const filterSuccessLaunchByInput = (inputSearchLaunch) => {
+    //console.log(inputSearchLaunch);
+    if (inputSearchLaunch == "") {
+      setCardData(cardDataActual);
+    } else {
+      const filteredData = cardDataActual.filter((items) =>
+        (items.success ? "true" : "false").includes(inputSearchLaunch)
+      );
+      setCardData(filteredData);
+    }
+  };
+
+  useEffect(() => {
+    filterSuccessLaunchByInput(inputSearchLaunch);
+  }, [inputSearchLaunch]);
+
+  // Filtering Successful Land by Button
   const filterBySuccessfulLand = (e) => {
     const filteredData = cardDataActual.filter((items) =>
       (items.cores[0].landing_attempt ? "true" : "false").includes(
@@ -71,6 +101,24 @@ export default function App() {
     );
     setCardData(filteredData);
   };
+
+  // Filtering Successful Land by Input
+  const filterSuccessLandByInput = (inputSearchLand) => {
+    if (inputSearchLand == "") {
+      setCardData(cardDataActual);
+    } else {
+      const filteredData = cardDataActual.filter((items) =>
+        (items.cores[0].landing_attempt ? "true" : "false").includes(
+          inputSearchLand
+        )
+      );
+      setCardData(filteredData);
+    }
+  };
+
+  useEffect(() => {
+    filterSuccessLandByInput(inputSearchLand);
+  }, [inputSearchLand]);
 
   return (
     <div className="App">
@@ -85,8 +133,8 @@ export default function App() {
                 type="number"
                 min="2006"
                 placeholder="Launch Year"
-                value={inputSearch}
-                onChange={(e) => setInputSearch(e.target.value)}
+                value={inputSearchYear}
+                onChange={(e) => setInputSearchYear(e.target.value)}
               />
               <div className="launchYearButton">
                 {dateArray.map((items, idx) => {
@@ -102,7 +150,13 @@ export default function App() {
               </div>
             </div>
             <div className="successfulYear">
-              <input type="text" placeholder="Successful Launch" />
+              <input
+                type="text"
+                placeholder="Successful Launch"
+                name="inputSearch"
+                value={inputSearchLaunch}
+                onChange={(e) => setInputSearchLaunch(e.target.value)}
+              />
               <div
                 className="yearTrueFalse"
                 onClick={(e) => filterBySuccessfulLaunch(e)}
@@ -112,7 +166,13 @@ export default function App() {
               </div>
             </div>
             <div className="successfulLand">
-              <input type="text" placeholder="Successful Land" />
+              <input
+                type="text"
+                placeholder="Successful Land"
+                name="inputSearchLand"
+                value={inputSearchLand}
+                onChange={(e) => setInputSearchLand(e.target.value)}
+              />
               <div
                 className="landTrueFalse"
                 onClick={(e) => filterBySuccessfulLand(e)}
@@ -123,7 +183,7 @@ export default function App() {
             </div>
           </div>
           <div className="rightGrid">
-            {cardData.map((items) => (
+            {copyCardData.map((items) => (
               <div className="card">
                 <img src={items.links.patch.small} alt="spaceCraftImage" />
                 <div className="container">
@@ -165,11 +225,3 @@ export default function App() {
     </div>
   );
 }
-
-// const filterBySuccessfulLaunch =(e)=>{
-//   console.log(e.target.value);
-// }
-
-// const filterBySuccessfulLand =(e)=>{
-//   console.log(e.target.value);
-// }
