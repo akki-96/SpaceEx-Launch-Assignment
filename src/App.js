@@ -183,8 +183,8 @@ export default function App() {
           </div>
 
           <div className="rightGrid">
-            {cardData.map((items) => (
-              <Card items={items} />
+            {cardData.map((items, idx) => (
+              <Card key={idx} items={items} />
             ))}
           </div>
         </div>
