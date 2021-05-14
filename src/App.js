@@ -3,7 +3,10 @@ import "./styles.css";
 
 export default function App() {
   const [cardData, setCardData] = useState([]);
-  //  const [copyData, setCopyData] = useState([]);
+  const [inputSearch, setInputSearch] = useState();
+  const [cardDataActual, setCardDataActual] = useState([]);
+  const [copyCardData, setCopyCardData] = useState([]);
+
   const dateArray = [
     "2006",
     "2007",
@@ -26,15 +29,48 @@ export default function App() {
       `https://api.spaceXdata.com/v4/launches?limit=100`
     );
     const apiJsonData = await apiData.json();
-    console.log(apiJsonData[0].cores[0].landing_attempt);
     const apiDataCopy = [...apiJsonData];
-    // setCopyData(apiDataCopy);
-    setCardData(apiJsonData);
+    const copyCardData = apiDataCopy.filter(
+      (items) => items.links.patch.small != null
+    );
+    setCardData(copyCardData);
+    setCardDataActual(apiJsonData);
+    setCopyCardData(copyCardData);
   };
 
   useEffect(() => {
     apiCall();
   }, []);
+
+  const filterByLaunchYear = (e) => {
+    // console.log();
+    const filteredData = cardDataActual.filter(
+      (items) =>
+        items.date_local.includes(e.target.value) ||
+        items.date_local.includes(parseInt(inputSearch))
+    );
+    setCardData(filteredData);
+  };
+
+  //  useEffect(()=>{
+  //   filterByLaunchYear();
+  //  },[inputSearch])
+
+  const filterBySuccessfulLaunch = (e) => {
+    const filteredData = cardDataActual.filter((items) =>
+      (items.success ? "true" : "false").includes(e.target.value)
+    );
+    setCardData(filteredData);
+  };
+
+  const filterBySuccessfulLand = (e) => {
+    const filteredData = cardDataActual.filter((items) =>
+      (items.cores[0].landing_attempt ? "true" : "false").includes(
+        e.target.value
+      )
+    );
+    setCardData(filteredData);
+  };
 
   return (
     <div className="App">
@@ -44,13 +80,22 @@ export default function App() {
           <div className="leftGrid">
             <div className="launchYear">
               <h1 className="filter">Filters</h1>
-              <input type="text" placeholder="Launch Year" />
+              <input
+                name="inputSearch"
+                type="number"
+                min="2006"
+                placeholder="Launch Year"
+                value={inputSearch}
+                onChange={(e) => setInputSearch(e.target.value)}
+              />
               <div className="launchYearButton">
-                {dateArray.map((items) => {
+                {dateArray.map((items, idx) => {
                   return (
-                    <div className="btn">
+                    <div className="btn" onClick={(e) => filterByLaunchYear(e)}>
                       {" "}
-                      <button>{items}</button>
+                      <button id={idx} value={items}>
+                        {items}
+                      </button>
                     </div>
                   );
                 })}
@@ -58,16 +103,22 @@ export default function App() {
             </div>
             <div className="successfulYear">
               <input type="text" placeholder="Successful Launch" />
-              <div className="yearTrueFalse">
-                <button>True</button>
-                <button>False</button>
+              <div
+                className="yearTrueFalse"
+                onClick={(e) => filterBySuccessfulLaunch(e)}
+              >
+                <button value={true}>True</button>
+                <button value={false}>False</button>
               </div>
             </div>
             <div className="successfulLand">
               <input type="text" placeholder="Successful Land" />
-              <div className="landTrueFalse">
-                <button>True</button>
-                <button>False</button>
+              <div
+                className="landTrueFalse"
+                onClick={(e) => filterBySuccessfulLand(e)}
+              >
+                <button value={true}>True</button>
+                <button value={false}>False</button>
               </div>
             </div>
           </div>
@@ -114,3 +165,11 @@ export default function App() {
     </div>
   );
 }
+
+// const filterBySuccessfulLaunch =(e)=>{
+//   console.log(e.target.value);
+// }
+
+// const filterBySuccessfulLand =(e)=>{
+//   console.log(e.target.value);
+// }
