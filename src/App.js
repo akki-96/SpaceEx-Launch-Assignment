@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import "./styles.css";
-
+import Card from "./Card";
 export default function App() {
   const [cardData, setCardData] = useState([]);
-  const [cardDataActual, setCardDataActual] = useState([]);
   const [copyCardData, setCopyCardData] = useState([]);
   const [inputSearchYear, setInputSearchYear] = useState();
   const [inputSearchLaunch, setInputSearchLaunch] = useState();
@@ -24,7 +23,8 @@ export default function App() {
     "2017",
     "2018",
     "2019",
-    "2020"
+    "2020",
+    "2021"
   ];
   const apiCall = async () => {
     const apiData = await fetch(
@@ -36,7 +36,6 @@ export default function App() {
       (items) => items.links.patch.small != null
     );
     setCardData(copyCardData);
-    setCardDataActual(apiJsonData);
     setCopyCardData(copyCardData);
   };
 
@@ -46,7 +45,7 @@ export default function App() {
 
   // Filtering Launch Year by Button
   const filterByLaunchYear = (e) => {
-    const filteredData = cardDataActual.filter((items) =>
+    const filteredData = copyCardData.filter((items) =>
       items.date_local.includes(e.target.value)
     );
     setCardData(filteredData);
@@ -54,9 +53,9 @@ export default function App() {
   // Filtering Launch Year by Input
   const filterLaunchYearByInput = (inputSearch) => {
     if (inputSearch == "") {
-      setCardData(cardDataActual);
+      setCardData(cardData);
     } else {
-      const filteredData = cardDataActual.filter((items) =>
+      const filteredData = copyCardData.filter((items) =>
         items.date_local.includes(parseInt(inputSearch))
       );
       setCardData(filteredData);
@@ -69,7 +68,7 @@ export default function App() {
 
   // Filtering Successful Launch by Button
   const filterBySuccessfulLaunch = (e) => {
-    const filteredData = cardDataActual.filter((items) =>
+    const filteredData = copyCardData.filter((items) =>
       (items.success ? "true" : "false").includes(e.target.value)
     );
     setCardData(filteredData);
@@ -77,11 +76,10 @@ export default function App() {
 
   // Filtering Successful Launch by Input
   const filterSuccessLaunchByInput = (inputSearchLaunch) => {
-    //console.log(inputSearchLaunch);
     if (inputSearchLaunch == "") {
-      setCardData(cardDataActual);
+      setCardData(copyCardData);
     } else {
-      const filteredData = cardDataActual.filter((items) =>
+      const filteredData = copyCardData.filter((items) =>
         (items.success ? "true" : "false").includes(inputSearchLaunch)
       );
       setCardData(filteredData);
@@ -94,7 +92,7 @@ export default function App() {
 
   // Filtering Successful Land by Button
   const filterBySuccessfulLand = (e) => {
-    const filteredData = cardDataActual.filter((items) =>
+    const filteredData = copyCardData.filter((items) =>
       (items.cores[0].landing_attempt ? "true" : "false").includes(
         e.target.value
       )
@@ -105,9 +103,9 @@ export default function App() {
   // Filtering Successful Land by Input
   const filterSuccessLandByInput = (inputSearchLand) => {
     if (inputSearchLand == "") {
-      setCardData(cardDataActual);
+      setCardData(copyCardData);
     } else {
-      const filteredData = cardDataActual.filter((items) =>
+      const filteredData = copyCardData.filter((items) =>
         (items.cores[0].landing_attempt ? "true" : "false").includes(
           inputSearchLand
         )
@@ -183,38 +181,8 @@ export default function App() {
             </div>
           </div>
           <div className="rightGrid">
-            {copyCardData.map((items) => (
-              <div className="card">
-                <img src={items.links.patch.small} alt="spaceCraftImage" />
-                <div className="container">
-                  <h4>
-                    Mission Name : {items.name} #{items.flight_number}
-                  </h4>{" "}
-                  <br />
-                  <h5>
-                    Mission Ids :{" "}
-                    <ul style={{ marginLeft: "1.5rem" }}>
-                      {" "}
-                      <li> {items.id}</li>
-                    </ul>{" "}
-                  </h5>
-                  <br />
-                  <h5>
-                    Launch Year :{"  "}
-                    {parseInt(items.date_local)}
-                  </h5>{" "}
-                  <br />
-                  <h5>
-                    Successful Launch : {items.success ? "true" : "false"}
-                  </h5>{" "}
-                  <br />
-                  <h5>
-                    Successful Landing :{" "}
-                    {items.cores[0].landing_attempt ? "true" : "false"}
-                  </h5>{" "}
-                  <br />
-                </div>
-              </div>
+            {cardData.map((items) => (
+              <Card items={items} />
             ))}
             <footer>
               <h2 className="footer">Developed by : Akhilesh Singh</h2>
